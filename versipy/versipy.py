@@ -131,7 +131,7 @@ def bump_up_version(
     # Init method
     opt_summary_dict = opt_summary(local_opt=locals())
     log = get_logger(name="versipy bump_up", verbose=verbose, quiet=quiet)
-    log.warning("Bump up version package version")
+    log.warning("Bump up package version")
 
     log.info("Checking options and input files")
     log_dict(opt_summary_dict, log.debug, "Options summary")
@@ -155,6 +155,8 @@ def bump_up_version(
     )
     version_str = get_version_str(info_d["version"])
 
+    log.info("Version will be updated from: {} to {}".format(previous_version_str, version_str))
+
     log.info("Update managed files")
     update_managed_files(info_d=info_d, overwrite=overwrite, dry=dry, log=log)
     update_versipy_files(
@@ -174,7 +176,7 @@ def bump_up_version(
         extra_files = [versipy_fn, versipy_history_fn]
         git_files(files=managed_files + extra_files, version=version_str, comment=comment, git_tag=git_tag, log=log)
 
-    log.warning("Version updated: {} > {}".format(previous_version_str, version_str))
+    log.warning("Version successfully updated")
 
 
 def set_version(
